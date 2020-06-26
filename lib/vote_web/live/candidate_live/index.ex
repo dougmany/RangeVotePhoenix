@@ -11,6 +11,11 @@ defmodule VoteWeb.CandidateLive.Index do
 
   @impl true
   def handle_params(params, _url, socket) do
+    sort_options = %{sort_by: :score, sort_order: :desc}
+    candidates = Ballot.list_candidates(sort: sort_options)
+
+    socket = assign(socket, options: sort_options, candidates: candidates)
+
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 

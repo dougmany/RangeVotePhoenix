@@ -5,7 +5,7 @@ defmodule Vote.Ballot.Candidate do
   schema "candidates" do
     field :description, :string
     field :name, :string
-    field :score, :integer
+    field :score, :integer, default: 5
 
     timestamps()
   end

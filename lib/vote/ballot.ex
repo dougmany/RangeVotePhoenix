@@ -21,6 +21,16 @@ defmodule Vote.Ballot do
     Repo.all(Candidate)
   end
 
+  def list_candidates(criteria) when is_list(criteria)do
+    query = from(d in Candidate)
+
+    Enum.reduce(criteria, query, fn
+      {:sort, %{sort_by: sort_by, sort_order: sort_order}}, query ->
+      from q in query, order_by: [{^sort_order, ^sort_by}]
+      end)
+      |> Repo.all()
+  end
+
   @doc """
   Gets a single candidate.
 
