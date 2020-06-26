@@ -1,0 +1,32 @@
+<h1>Show Candidate</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, VoteWeb.CandidateLive.FormComponent,
+    id: @candidate.id,
+    title: @page_title,
+    action: @live_action,
+    candidate: @candidate,
+    return_to: Routes.candidate_show_path(@socket, :show, @candidate) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @candidate.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @candidate.description %>
+  </li>
+
+  <li>
+    <strong>Score:</strong>
+    <%= @candidate.score %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.candidate_show_path(@socket, :edit, @candidate), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.candidate_index_path(@socket, :index) %></span>
