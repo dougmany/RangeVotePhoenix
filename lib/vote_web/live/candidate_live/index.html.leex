@@ -24,7 +24,7 @@
       <tr id="candidate-<%= candidate.id %>">
         <td><%= candidate.name %></td>
         <td><%= candidate.description %></td>
-        <td><%= candidate.score %></td>
+        <td><button phx-click="up" phx-value-id="<%= candidate.id %>">+</button><%= candidate.score %><button phx-click="down" phx-value-id="<%= candidate.id %>">-</button></td>
 
         <td>
           <span><%= live_redirect "Show", to: Routes.candidate_show_path(@socket, :show, candidate) %></span>
