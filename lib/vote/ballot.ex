@@ -162,9 +162,10 @@ defmodule Vote.Ballot do
 
   """
   def create_ballot__item(attrs \\ %{}) do
+    %{"candidate_id" => candidate_id } = attrs
     %Ballot_Item{}
     |> Ballot_Item.changeset(attrs)
-    |> Ecto.Changeset.put_change(:candidate_id, 4)
+    |> Ecto.Changeset.put_change(:candidate_id, String.to_integer(candidate_id))
     |> Repo.insert()
   end
 
