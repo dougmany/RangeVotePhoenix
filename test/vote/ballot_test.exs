@@ -65,4 +65,63 @@ defmodule Vote.BallotTest do
       assert %Ecto.Changeset{} = Ballot.change_candidate(candidate)
     end
   end
+
+  describe "ballot_items" do
+    alias Vote.Ballot.Ballot_Item
+
+    @valid_attrs %{score: "120.5"}
+    @update_attrs %{score: "456.7"}
+    @invalid_attrs %{score: nil}
+
+    def ballot__item_fixture(attrs \\ %{}) do
+      {:ok, ballot__item} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Ballot.create_ballot__item()
+
+      ballot__item
+    end
+
+    test "list_ballot_items/0 returns all ballot_items" do
+      ballot__item = ballot__item_fixture()
+      assert Ballot.list_ballot_items() == [ballot__item]
+    end
+
+    test "get_ballot__item!/1 returns the ballot__item with given id" do
+      ballot__item = ballot__item_fixture()
+      assert Ballot.get_ballot__item!(ballot__item.id) == ballot__item
+    end
+
+    test "create_ballot__item/1 with valid data creates a ballot__item" do
+      assert {:ok, %Ballot_Item{} = ballot__item} = Ballot.create_ballot__item(@valid_attrs)
+      assert ballot__item.score == Decimal.new("120.5")
+    end
+
+    test "create_ballot__item/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Ballot.create_ballot__item(@invalid_attrs)
+    end
+
+    test "update_ballot__item/2 with valid data updates the ballot__item" do
+      ballot__item = ballot__item_fixture()
+      assert {:ok, %Ballot_Item{} = ballot__item} = Ballot.update_ballot__item(ballot__item, @update_attrs)
+      assert ballot__item.score == Decimal.new("456.7")
+    end
+
+    test "update_ballot__item/2 with invalid data returns error changeset" do
+      ballot__item = ballot__item_fixture()
+      assert {:error, %Ecto.Changeset{}} = Ballot.update_ballot__item(ballot__item, @invalid_attrs)
+      assert ballot__item == Ballot.get_ballot__item!(ballot__item.id)
+    end
+
+    test "delete_ballot__item/1 deletes the ballot__item" do
+      ballot__item = ballot__item_fixture()
+      assert {:ok, %Ballot_Item{}} = Ballot.delete_ballot__item(ballot__item)
+      assert_raise Ecto.NoResultsError, fn -> Ballot.get_ballot__item!(ballot__item.id) end
+    end
+
+    test "change_ballot__item/1 returns a ballot__item changeset" do
+      ballot__item = ballot__item_fixture()
+      assert %Ecto.Changeset{} = Ballot.change_ballot__item(ballot__item)
+    end
+  end
 end

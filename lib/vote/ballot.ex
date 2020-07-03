@@ -6,7 +6,7 @@ defmodule Vote.Ballot do
   import Ecto.Query, warn: false
   alias Vote.Repo
 
-  alias Vote.Ballot.Candidate
+  alias Vote.Ballot.{Candidate, Ballot_Item}
 
   @doc """
   Returns the list of candidates.
@@ -110,5 +110,109 @@ defmodule Vote.Ballot do
   """
   def change_candidate(%Candidate{} = candidate, attrs \\ %{}) do
     Candidate.changeset(candidate, attrs)
+  end
+
+  alias Vote.Ballot.Ballot_Item
+
+  @doc """
+  Returns the list of ballot_items.
+
+  ## Examples
+
+      iex> list_ballot_items()
+      [%Ballot_Item{}, ...]
+
+  """
+  def list_ballot_items do
+    Ballot_Item
+    |> Repo.all()
+    |> Repo.preload(:candidate)
+  end
+
+  @doc """
+  Gets a single ballot__item.
+
+  Raises `Ecto.NoResultsError` if the Ballot  item does not exist.
+
+  ## Examples
+
+      iex> get_ballot__item!(123)
+      %Ballot_Item{}
+
+      iex> get_ballot__item!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_ballot__item!(id) do
+    Ballot_Item
+    |> Repo.get!(id)
+    |> Repo.preload(:candidate)
+  end
+
+  @doc """
+  Creates a ballot__item.
+
+  ## Examples
+
+      iex> create_ballot__item(%{field: value})
+      {:ok, %Ballot_Item{}}
+
+      iex> create_ballot__item(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_ballot__item(attrs \\ %{}) do
+    %Ballot_Item{}
+    |> Ballot_Item.changeset(attrs)
+    |> Ecto.Changeset.put_change(:candidate_id, 4)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a ballot__item.
+
+  ## Examples
+
+      iex> update_ballot__item(ballot__item, %{field: new_value})
+      {:ok, %Ballot_Item{}}
+
+      iex> update_ballot__item(ballot__item, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_ballot__item(%Ballot_Item{} = ballot__item, attrs) do
+    ballot__item
+    |> Ballot_Item.changeset(attrs)
+    #|> Ecto.Changeset.cast_assoc(:candidate, with: &Candidate.changeset/2)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a ballot__item.
+
+  ## Examples
+
+      iex> delete_ballot__item(ballot__item)
+      {:ok, %Ballot_Item{}}
+
+      iex> delete_ballot__item(ballot__item)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_ballot__item(%Ballot_Item{} = ballot__item) do
+    Repo.delete(ballot__item)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking ballot__item changes.
+
+  ## Examples
+
+      iex> change_ballot__item(ballot__item)
+      %Ecto.Changeset{data: %Ballot_Item{}}
+
+  """
+  def change_ballot__item(%Ballot_Item{} = ballot__item, attrs \\ %{}) do
+    Ballot_Item.changeset(ballot__item, attrs)
   end
 end

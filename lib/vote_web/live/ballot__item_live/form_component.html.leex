@@ -1,0 +1,21 @@
+<h2><%= @title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "ballot__item-form",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <div>
+    <%= label f, :score %>
+    <%= number_input f, :score, step: "any" %>
+    <%= error_tag f, :score %>
+  </div>
+  <div>
+    <%= label f, :candidate_id %>
+    <%= select(f, :candidate_id, Enum.map(@candidates, &{&1.name, &1.id}))%>
+    <%= error_tag f, :candidate_id %>
+  </div>
+
+  <%= submit "Save", phx_disable_with: "Saving..." %>
+</form>

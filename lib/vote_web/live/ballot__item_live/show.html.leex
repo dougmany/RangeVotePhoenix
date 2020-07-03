@@ -1,0 +1,29 @@
+<h1>Show Ballot  item</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, VoteWeb.Ballot_ItemLive.FormComponent,
+    id: @ballot__item.id,
+    title: @page_title,
+    action: @live_action,
+    ballot__item: @ballot__item,
+    return_to: Routes.ballot__item_show_path(@socket, :show, @ballot__item) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Score:</strong>
+    <%= @ballot__item.score %>
+  </li>
+  <li>
+    <strong>Name:</strong>
+    <%= @ballot__item.candidate.name %>
+  </li>
+    <li>
+    <strong>Description:</strong>
+    <%= @ballot__item.candidate.description %>
+  </li>
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.ballot__item_show_path(@socket, :edit, @ballot__item), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.ballot__item_index_path(@socket, :index) %></span>

@@ -1,0 +1,39 @@
+<h1>Listing Ballot items</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, VoteWeb.Ballot_ItemLive.FormComponent,
+    id: @ballot__item.id || :new,
+    title: @page_title,
+    action: @live_action,
+    ballot__item: @ballot__item,
+    candidates: @candidates,
+    return_to: Routes.ballot__item_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Score</th>
+      <th>Candidate</th>
+      <th>description</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="ballot_items">
+    <%= for ballot__item <- @ballot_items do %>
+      <tr id="ballot__item-<%= ballot__item.id %>">
+        <td><%= ballot__item.score %></td>
+        <td><%= ballot__item.candidate.name %></td>
+        <td><%= ballot__item.candidate.description %></td>
+        <td>
+          <span><%= live_redirect "Show", to: Routes.ballot__item_show_path(@socket, :show, ballot__item) %></span>
+          <span><%= live_patch "Edit", to: Routes.ballot__item_index_path(@socket, :edit, ballot__item) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: ballot__item.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Ballot  item", to: Routes.ballot__item_index_path(@socket, :new) %></span>
