@@ -5,7 +5,7 @@ defmodule Vote.Ballot.Ballot_Item do
   alias Vote.Ballot.Candidate
 
   schema "ballot_items" do
-    field :score, :decimal
+    field :score, :float, default: 0.0
     belongs_to :candidate, Candidate
 
     timestamps()

@@ -13,19 +13,25 @@
 <table>
   <thead>
     <tr>
-      <th>Score</th>
       <th>Candidate</th>
       <th>description</th>
-
+      <th>Score</th>
       <th></th>
     </tr>
   </thead>
   <tbody id="ballot_items">
     <%= for ballot__item <- @ballot_items do %>
       <tr id="ballot__item-<%= ballot__item.id %>">
-        <td><%= ballot__item.score %></td>
         <td><%= ballot__item.candidate.name %></td>
         <td><%= ballot__item.candidate.description %></td>
+        <td>
+          <button phx-click="up" phx-value-id="<%= ballot__item.id %>">&#10133;</button>
+          <button phx-click="up_small" phx-value-id="<%= ballot__item.id %>">+</button>
+          <%= ballot__item.score %>
+          <button phx-click="down_small" phx-value-id="<%= ballot__item.id %>">-</button>
+          <button phx-click="down" phx-value-id="<%= ballot__item.id %>">&#10134;</button>
+        </td>
+
         <td>
           <span><%= live_redirect "Show", to: Routes.ballot__item_show_path(@socket, :show, ballot__item) %></span>
           <span><%= live_patch "Edit", to: Routes.ballot__item_index_path(@socket, :edit, ballot__item) %></span>

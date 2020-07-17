@@ -33,6 +33,13 @@ defmodule VoteWeb.Router do
     live "/ballot_items/:id", Ballot_ItemLive.Show, :show
     live "/ballot_items/:id/show/edit", Ballot_ItemLive.Show, :edit
 
+    live "/elections", ElectionLive.Index, :index
+    live "/elections/new", ElectionLive.Index, :new
+    live "/elections/:id/edit", ElectionLive.Index, :edit
+
+    live "/elections/:id", ElectionLive.Show, :show
+    live "/elections/:id/show/edit", ElectionLive.Show, :edit
+
   end
 
   # Other scopes may use custom stacks.

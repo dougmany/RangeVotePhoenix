@@ -3,7 +3,7 @@ defmodule Vote.Repo.Migrations.CreateBallotItems do
 
   def change do
     create table(:ballot_items) do
-      add :score, :decimal
+      add :score, :float
       add :candidate_id, references(:candidates, on_delete: :nothing)
 
       timestamps()

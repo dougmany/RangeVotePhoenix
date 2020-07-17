@@ -124,4 +124,65 @@ defmodule Vote.BallotTest do
       assert %Ecto.Changeset{} = Ballot.change_ballot__item(ballot__item)
     end
   end
+
+  describe "elections" do
+    alias Vote.Ballot.Election
+
+    @valid_attrs %{description: "some description", name: "some name"}
+    @update_attrs %{description: "some updated description", name: "some updated name"}
+    @invalid_attrs %{description: nil, name: nil}
+
+    def election_fixture(attrs \\ %{}) do
+      {:ok, election} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Ballot.create_election()
+
+      election
+    end
+
+    test "list_elections/0 returns all elections" do
+      election = election_fixture()
+      assert Ballot.list_elections() == [election]
+    end
+
+    test "get_election!/1 returns the election with given id" do
+      election = election_fixture()
+      assert Ballot.get_election!(election.id) == election
+    end
+
+    test "create_election/1 with valid data creates a election" do
+      assert {:ok, %Election{} = election} = Ballot.create_election(@valid_attrs)
+      assert election.description == "some description"
+      assert election.name == "some name"
+    end
+
+    test "create_election/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Ballot.create_election(@invalid_attrs)
+    end
+
+    test "update_election/2 with valid data updates the election" do
+      election = election_fixture()
+      assert {:ok, %Election{} = election} = Ballot.update_election(election, @update_attrs)
+      assert election.description == "some updated description"
+      assert election.name == "some updated name"
+    end
+
+    test "update_election/2 with invalid data returns error changeset" do
+      election = election_fixture()
+      assert {:error, %Ecto.Changeset{}} = Ballot.update_election(election, @invalid_attrs)
+      assert election == Ballot.get_election!(election.id)
+    end
+
+    test "delete_election/1 deletes the election" do
+      election = election_fixture()
+      assert {:ok, %Election{}} = Ballot.delete_election(election)
+      assert_raise Ecto.NoResultsError, fn -> Ballot.get_election!(election.id) end
+    end
+
+    test "change_election/1 returns a election changeset" do
+      election = election_fixture()
+      assert %Ecto.Changeset{} = Ballot.change_election(election)
+    end
+  end
 end

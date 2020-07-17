@@ -1,0 +1,37 @@
+<h1>Listing Elections</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, VoteWeb.ElectionLive.FormComponent,
+    id: @election.id || :new,
+    title: @page_title,
+    action: @live_action,
+    election: @election,
+    return_to: Routes.election_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="elections">
+    <%= for election <- @elections do %>
+      <tr id="election-<%= election.id %>">
+        <td><%= election.name %></td>
+        <td><%= election.description %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.election_show_path(@socket, :show, election) %></span>
+          <span><%= live_patch "Edit", to: Routes.election_index_path(@socket, :edit, election) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: election.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Election", to: Routes.election_index_path(@socket, :new) %></span>

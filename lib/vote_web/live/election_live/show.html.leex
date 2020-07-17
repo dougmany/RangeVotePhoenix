@@ -1,0 +1,27 @@
+<h1>Show Election</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, VoteWeb.ElectionLive.FormComponent,
+    id: @election.id,
+    title: @page_title,
+    action: @live_action,
+    election: @election,
+    return_to: Routes.election_show_path(@socket, :show, @election) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @election.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @election.description %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.election_show_path(@socket, :edit, @election), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.election_index_path(@socket, :index) %></span>
