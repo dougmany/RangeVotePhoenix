@@ -42,48 +42,6 @@ defmodule VoteWeb.Ballot_ItemLive.Index do
     {:noreply, assign(socket, :ballot_items, list_ballot_items())}
   end
 
-  def handle_event("up", %{"id" => id}, socket) do
-    ballot__item = Ballot.get_ballot__item!(id)
-
-    if ballot__item.score < 9.0 do
-      Ballot.update_ballot__item(ballot__item, %{score: ballot__item.score + 1})
-    end
-
-    {:noreply, assign(socket, :ballot_items, list_ballot_items())}
-  end
-
-  def handle_event("up_small", %{"id" => id}, socket) do
-    ballot__item = Ballot.get_ballot__item!(id)
-
-    if ballot__item.score < 9.9 do
-      new_score = ballot__item.score + 0.1 |> Float.round(1)
-      Ballot.update_ballot__item(ballot__item, %{score: new_score})
-    end
-
-    {:noreply, assign(socket, :ballot_items, list_ballot_items())}
-  end
-
-  def handle_event("down", %{"id" => id}, socket) do
-    ballot__item = Ballot.get_ballot__item!(id)
-    if ballot__item.score > 0.9 do
-      Ballot.update_ballot__item(ballot__item, %{score: ballot__item.score - 1})
-    end
-
-    {:noreply, assign(socket, :ballot_items, list_ballot_items())}
-  end
-
-  def handle_event("down_small", %{"id" => id}, socket) do
-    ballot__item = Ballot.get_ballot__item!(id)
-
-    if ballot__item.score > 0 do
-       new_score = ballot__item.score - 0.1 |> Float.round(1)
-      Ballot.update_ballot__item(ballot__item, %{score: new_score})
-    end
-
-    {:noreply, assign(socket, :ballot_items, list_ballot_items())}
-  end
-
-
   defp list_ballot_items do
     sort_options = %{sort_by: :score, sort_order: :desc}
     Ballot.list_ballot_items(sort: sort_options)
