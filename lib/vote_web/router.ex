@@ -27,6 +27,7 @@ defmodule VoteWeb.Router do
     live "/candidates/:id/show/edit", CandidateLive.Show, :edit
 
     live "/ballot_cast", Ballot_CastLive.Index, :index
+    live "/ballot_cast/:id", Ballot_CastLive.Index, :index
 
     live "/ballot_items", Ballot_ItemLive.Index, :index
     live "/ballot_items/new", Ballot_ItemLive.Index, :new

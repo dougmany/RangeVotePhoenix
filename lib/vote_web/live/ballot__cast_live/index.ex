@@ -9,6 +9,13 @@ defmodule VoteWeb.Ballot_CastLive.Index do
     {:ok, assign(socket, :ballot_items, list_ballot_items())}
   end
 
+    @impl true
+  def handle_params(%{"id" => id}, _url, socket) do
+    {:noreply,
+    socket
+    |> assign(:ballot_items, Ballot.list_ballot_items(id))}
+  end
+
   @impl true
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}

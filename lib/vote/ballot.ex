@@ -138,13 +138,21 @@ defmodule Vote.Ballot do
     |> Repo.preload(:election)
   end
 
-  def list_ballot_items(criteria) when is_list(criteria)do
+  def list_ballot_items(criteria) when is_list(criteria) do
     query = from(d in Ballot_Item)
 
     Enum.reduce(criteria, query, fn
       {:sort, %{sort_by: sort_by, sort_order: sort_order}}, query ->
       from q in query, order_by: [{^sort_order, ^sort_by}]
       end)
+      |> Repo.all()
+      |> Repo.preload(:candidate)
+      |> Repo.preload(:election)
+  end
+
+  def list_ballot_items(id) do
+    IO.puts("Made it")
+    query = from(b in Ballot_Item, where: b.election_id == ^id)
       |> Repo.all()
       |> Repo.preload(:candidate)
       |> Repo.preload(:election)
@@ -157,7 +165,7 @@ defmodule Vote.Ballot do
 
   ## Examples
 
-      iex> get_ballot__item!(123)candidate
+      iex> get_ballot__item!(123)
       %Ballot_Item{}
 
       iex> get_ballot__item!(456)
