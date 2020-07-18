@@ -16,16 +16,18 @@ defmodule VoteWeb.Ballot_ItemLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Ballot  item")
+    |> assign(:page_title, "Edit Ballot item")
     |> assign(:ballot__item, Ballot.get_ballot__item!(id))
     |> assign(:candidates, list_candidates())
+    |> assign(:elections, list_elections())
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Ballot  item")
+    |> assign(:page_title, "New Ballot item")
     |> assign(:ballot__item, %Ballot_Item{})
     |> assign(:candidates, list_candidates())
+    |> assign(:elections, list_elections())
   end
 
   defp apply_action(socket, :index, _params) do
@@ -49,5 +51,9 @@ defmodule VoteWeb.Ballot_ItemLive.Index do
 
   defp list_candidates do
     Ballot.list_candidates()
+  end
+
+  defp list_elections do
+    Ballot.list_elections()
   end
 end

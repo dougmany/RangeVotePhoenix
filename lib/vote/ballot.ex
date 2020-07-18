@@ -6,7 +6,7 @@ defmodule Vote.Ballot do
   import Ecto.Query, warn: false
   alias Vote.Repo
 
-  alias Vote.Ballot.{Candidate, Ballot_Item}
+  alias Vote.Ballot.{Candidate, Ballot_Item, Election}
 
   @doc """
   Returns the list of candidates.
@@ -135,6 +135,7 @@ defmodule Vote.Ballot do
     Ballot_Item
     |> Repo.all()
     |> Repo.preload(:candidate)
+    |> Repo.preload(:election)
   end
 
   def list_ballot_items(criteria) when is_list(criteria)do
@@ -146,6 +147,7 @@ defmodule Vote.Ballot do
       end)
       |> Repo.all()
       |> Repo.preload(:candidate)
+      |> Repo.preload(:election)
   end
 
   @doc """
@@ -155,7 +157,7 @@ defmodule Vote.Ballot do
 
   ## Examples
 
-      iex> get_ballot__item!(123)
+      iex> get_ballot__item!(123)candidate
       %Ballot_Item{}
 
       iex> get_ballot__item!(456)
@@ -166,6 +168,7 @@ defmodule Vote.Ballot do
     Ballot_Item
     |> Repo.get!(id)
     |> Repo.preload(:candidate)
+    |> Repo.preload(:election)
   end
 
   @doc """
@@ -182,9 +185,11 @@ defmodule Vote.Ballot do
   """
   def create_ballot__item(attrs \\ %{}) do
     %{"candidate_id" => candidate_id } = attrs
+    %{"election_id" => election_id } = attrs
     %Ballot_Item{}
     |> Ballot_Item.changeset(attrs)
     |> Ecto.Changeset.put_change(:candidate_id, String.to_integer(candidate_id))
+    |> Ecto.Changeset.put_change(:election_id, String.to_integer(election_id))
     |> Repo.insert()
   end
 
@@ -204,6 +209,7 @@ defmodule Vote.Ballot do
     ballot__item
     |> Ballot_Item.changeset(attrs)
     |> Ecto.Changeset.cast_assoc(:candidate, with: &Candidate.changeset/2)
+    |> Ecto.Changeset.cast_assoc(:election, with: &Election.changeset/2)
     |> Repo.update()
   end
 
@@ -233,7 +239,10 @@ defmodule Vote.Ballot do
 
   """
   def change_ballot__item(%Ballot_Item{} = ballot__item, attrs \\ %{}) do
-    Ballot_Item.changeset(ballot__item, attrs)
+    ballot__item
+    |> Ballot_Item.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:candidate, with: &Candidate.changeset/2)
+    |> Ecto.Changeset.cast_assoc(:election, with: &Election.changeset/2)
   end
 
   alias Vote.Ballot.Election

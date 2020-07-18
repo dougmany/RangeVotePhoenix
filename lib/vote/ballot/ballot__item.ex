@@ -3,10 +3,12 @@ defmodule Vote.Ballot.Ballot_Item do
   import Ecto.Changeset
 
   alias Vote.Ballot.Candidate
+  alias Vote.Ballot.Election
 
   schema "ballot_items" do
     field :score, :float, default: 0.0
     belongs_to :candidate, Candidate
+    belongs_to :election, Election
 
     timestamps()
   end

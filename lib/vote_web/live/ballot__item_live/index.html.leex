@@ -7,6 +7,7 @@
     action: @live_action,
     ballot__item: @ballot__item,
     candidates: @candidates,
+    elections: @elections,
     return_to: Routes.ballot__item_index_path(@socket, :index) %>
 <% end %>
 
@@ -15,7 +16,7 @@
     <tr>
       <th>Candidate</th>
       <th>description</th>
-      <th>Score</th>
+      <th>Election</th>
       <th></th>
     </tr>
   </thead>
@@ -25,7 +26,7 @@
         <td><%= ballot__item.candidate.name %></td>
         <td><%= ballot__item.candidate.description %></td>
         <td>
-          <%= ballot__item.score %>
+          <%= ballot__item.election.name %>
         </td>
 
         <td>

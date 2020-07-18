@@ -16,6 +16,11 @@
     <%= select(f, :candidate_id, Enum.map(@candidates, &{&1.name, &1.id}))%>
     <%= error_tag f, :candidate_id %>
   </div>
+  <div>
+    <%= label f, :election_id %>
+    <%= select(f, :election_id, Enum.map(@elections, &{&1.name, &1.id}))%>
+    <%= error_tag f, :election_id %>
+  </div>
 
   <%= submit "Save", phx_disable_with: "Saving..." %>
 </form>

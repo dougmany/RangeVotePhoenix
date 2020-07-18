@@ -2,9 +2,12 @@ defmodule Vote.Ballot.Election do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Vote.Ballot.Ballot_Item
+
   schema "elections" do
     field :description, :string
     field :name, :string
+    has_many :ballot_items, Ballot_Item
 
     timestamps()
   end
