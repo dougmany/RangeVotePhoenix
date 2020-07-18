@@ -21,11 +21,6 @@
     <%= @candidate.description %>
   </li>
 
-  <li>
-    <strong>Score:</strong>
-    <%= @candidate.score %>
-  </li>
-
 </ul>
 
 <span><%= live_patch "Edit", to: Routes.candidate_show_path(@socket, :edit, @candidate), class: "button" %></span>

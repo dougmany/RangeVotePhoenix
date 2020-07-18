@@ -44,26 +44,7 @@ defmodule VoteWeb.CandidateLive.Index do
     {:noreply, assign(socket, :candidates, list_candidates())}
   end
 
-  def handle_event("up", %{"id" => id}, socket) do
-    candidate = Ballot.get_candidate!(id)
-    if candidate.score < 10 do
-      Ballot.update_candidate(candidate, %{score: candidate.score + 1})
-    end
-
-    {:noreply, assign(socket, :candidates, list_candidates())}
-  end
-
-  def handle_event("down", %{"id" => id}, socket) do
-    candidate = Ballot.get_candidate!(id)
-    if candidate.score > 0 do
-      Ballot.update_candidate(candidate, %{score: candidate.score - 1})
-    end
-
-    {:noreply, assign(socket, :candidates, list_candidates())}
-  end
-
   defp list_candidates do
-    sort_options = %{sort_by: :score, sort_order: :desc}
-    Ballot.list_candidates(sort: sort_options)
+    Ballot.list_candidates()
   end
 end

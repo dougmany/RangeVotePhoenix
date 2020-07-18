@@ -7,7 +7,6 @@ defmodule Vote.Ballot.Candidate do
   schema "candidates" do
     field :description, :string
     field :name, :string
-    field :score, :integer, default: 5
     has_many :ballot_items, Ballot_Item
 
     timestamps()
@@ -16,7 +15,7 @@ defmodule Vote.Ballot.Candidate do
   @doc false
   def changeset(candidate, attrs) do
     candidate
-    |> cast(attrs, [:name, :description, :score])
-    |> validate_required([:name, :description, :score])
+    |> cast(attrs, [:name, :description])
+    |> validate_required([:name, :description])
   end
 end
