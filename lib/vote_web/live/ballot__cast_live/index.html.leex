@@ -1,4 +1,4 @@
-<h1>Cast Ballot</h1>
+<h2>Cast Ballot</h2>
 
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, VoteWeb.Ballot_CastLive.FormComponent,
@@ -15,7 +15,7 @@
   <thead>
     <tr>
       <th>Candidate</th>
-      <th>description</th>
+      <th>Description</th>
       <th>Score</th>
     </tr>
   </thead>

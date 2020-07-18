@@ -1,4 +1,4 @@
-<h1>Listing Ballot items</h1>
+<h2>Listing Ballot items</h2>
 
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, VoteWeb.Ballot_ItemLive.FormComponent,
@@ -15,7 +15,7 @@
   <thead>
     <tr>
       <th>Candidate</th>
-      <th>description</th>
+      <th>Description</th>
       <th>Election</th>
       <th></th>
     </tr>
