@@ -25,6 +25,8 @@
         <td><%= election.description %></td>
 
         <td>
+          <a href="<%= Routes.static_path(@conn, "/ballot_cast/@:id") %>">Vote</a>
+          <a href="<%= Routes.static_path(@conn, "/ballot_cast/:id") %>">Elections</a><
           <span><%= live_redirect "Show", to: Routes.election_show_path(@socket, :show, election) %></span>
           <span><%= live_patch "Edit", to: Routes.election_index_path(@socket, :edit, election) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: election.id, data: [confirm: "Are you sure?"] %></span>
