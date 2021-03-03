@@ -1,5 +1,7 @@
 # Vote
 
+This is another attempt at a range vote system witten in Pheonix Live View.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
