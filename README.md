@@ -1,6 +1,5 @@
 # Vote
-
-This is another attempt at a range vote system witten in Pheonix Live View.
+This is another attempt at a range vote system written in Phoenix Live View.
 
 To start your Phoenix server:
 
